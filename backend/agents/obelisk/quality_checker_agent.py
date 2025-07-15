@@ -10,7 +10,7 @@ from typing import Dict, List, Optional, Any
 from datetime import datetime
 import logging
 
-from ..base_agent import BaseAgent, AgentMetadata, AgentType, AgentStatus
+from ..registry.agent_registry import BaseAgent, AgentMetadata, AgentType, AgentStatus
 from ...memory.memory_manager import memory_manager, MemoryType, MemoryPriority
 from ...orchestration.model_orchestrator import model_orchestrator
 
@@ -52,9 +52,7 @@ class QualityCheckerAgent(BaseAgent):
             retry_count=3
         )
         
-        super().__init__(metadata)
-        
-        self.config = config
+        super().__init__(metadata, config)
         self.obelisk_config = config.get("obelisk", {})
         self.memory_manager = memory_manager
         self.orchestrator = model_orchestrator
@@ -217,6 +215,19 @@ class QualityCheckerAgent(BaseAgent):
         }
         
         logger.info(f"🔍 {self.metadata.name} initialized with comprehensive quality checking capabilities")
+    
+    async def validate_task(self, task: Dict[str, Any]) -> bool:
+        """Validate if task is suitable for quality checker agent"""
+        task_type = task.get("type", "").lower()
+        content = task.get("content", "").lower()
+        
+        # Check if task requires quality checking
+        quality_keywords = [
+            "quality", "check", "review", "analyze", "audit", "validate",
+            "inspect", "examine", "security", "performance", "bug", "error"
+        ]
+        
+        return any(keyword in content for keyword in quality_keywords)
     
     async def execute(self, task: Dict[str, Any]) -> Dict[str, Any]:
         """Execute quality check task"""

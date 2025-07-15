@@ -21,6 +21,13 @@ from .meistrocraft.claude_executor_agent import create_claude_executor_agent
 from .meistrocraft.session_manager_agent import create_session_manager_agent
 from .meistrocraft.github_integrator_agent import create_github_integrator_agent
 from .meistrocraft.token_tracker_agent import create_token_tracker_agent
+from .obelisk.code_architect_agent import create_code_architect_agent
+from .obelisk.code_generator_agent import create_code_generator_agent
+from .obelisk.quality_checker_agent import create_quality_checker_agent
+from .obelisk.test_harness_agent import create_test_harness_agent
+from .obelisk.ideas_agent import create_ideas_agent
+from .obelisk.creativity_agent import create_creativity_agent
+from .obelisk.self_scoring_agent import create_self_scoring_agent
 from ..memory.memory_manager import memory_manager, MemoryType, MemoryPriority
 from ..orchestration.model_orchestrator import model_orchestrator
 
@@ -201,19 +208,74 @@ class AgentIntegrationManager:
         logger.info("🔮 Integrating OBELISK agents...")
         
         try:
-            # TODO: Integrate OBELISK agents
-            # - Code Architect
-            # - Code Generator
-            # - Quality Checker
-            # - Test Harness Agent
-            # - Ideas Agent
-            # - Creativity Agent
-            # - Self-Scoring Agent
+            # Create and register Code Architect Agent
+            code_architect = create_code_architect_agent(self.config)
+            if self.registry.register_agent(code_architect):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Code Architect Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Code Architect Agent integration failed")
             
-            logger.info("⏳ OBELISK integration planned for next phase")
+            # Create and register Code Generator Agent
+            code_generator = create_code_generator_agent(self.config)
+            if self.registry.register_agent(code_generator):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Code Generator Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Code Generator Agent integration failed")
+            
+            # Create and register Quality Checker Agent
+            quality_checker = create_quality_checker_agent(self.config)
+            if self.registry.register_agent(quality_checker):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Quality Checker Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Quality Checker Agent integration failed")
+            
+            # Create and register Test Harness Agent
+            test_harness = create_test_harness_agent(self.config)
+            if self.registry.register_agent(test_harness):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Test Harness Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Test Harness Agent integration failed")
+            
+            # Create and register Ideas Agent
+            ideas_agent = create_ideas_agent(self.config)
+            if self.registry.register_agent(ideas_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Ideas Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Ideas Agent integration failed")
+            
+            # Create and register Creativity Agent
+            creativity_agent = create_creativity_agent(self.config)
+            if self.registry.register_agent(creativity_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Creativity Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Creativity Agent integration failed")
+            
+            # Create and register Self-Scoring Agent
+            self_scoring = create_self_scoring_agent(self.config)
+            if self.registry.register_agent(self_scoring):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Self-Scoring Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Self-Scoring Agent integration failed")
+            
+            self.integration_stats["systems_integrated"].append("OBELISK")
             
         except Exception as e:
             logger.error(f"❌ OBELISK integration failed: {e}")
+            self.integration_stats["failed_integrations"] += 1
     
     async def _integrate_ai_dev_team_agents(self):
         """Integrate AI-Development-Team agents"""

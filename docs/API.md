@@ -203,14 +203,17 @@ Get status and information about all agents.
 **Response**:
 ```json
 {
-  "total_agents": 6,
+  "total_agents": 18,
   "agents_by_type": {
-    "architect": 1,
-    "coder": 1,
-    "tester": 1,
-    "reviewer": 1,
+    "architect": 2,
+    "coder": 3,
+    "tester": 2,
+    "reviewer": 2,
     "fixer": 1,
-    "deployer": 1
+    "deployer": 2,
+    "orchestrator": 1,
+    "memory": 1,
+    "analyzer": 4
   },
   "available_agents": [
     {
@@ -421,6 +424,76 @@ For real-time communication and streaming responses.
 - Cost analysis and budget management
 - Usage analytics and optimization recommendations
 - Limit enforcement and alerting
+
+### Code Architect Agent
+**Endpoint**: `POST /agents/code_architect`
+
+**Capabilities**:
+- High-level architecture plans and system designs
+- Software architecture design and component planning
+- Technology stack selection and system overview
+- Scalability planning and performance architecture
+- Security architecture and deployment strategy
+
+### Code Generator Agent
+**Endpoint**: `POST /agents/code_generator`
+
+**Capabilities**:
+- Multi-language code generation (Python, JS, TS, Java, Go)
+- File structure creation and project scaffolding
+- Framework integration and boilerplate generation
+- Dependency management and configuration files
+- Complete project setup with documentation
+
+### Quality Checker Agent
+**Endpoint**: `POST /agents/quality_checker`
+
+**Capabilities**:
+- Multi-dimensional quality analysis (security, performance, maintainability)
+- Security vulnerability detection and best practices validation
+- Code style checking and complexity analysis
+- Performance optimization suggestions
+- Static analysis with pattern recognition
+
+### Test Harness Agent
+**Endpoint**: `POST /agents/test_harness`
+
+**Capabilities**:
+- Multi-type test generation (unit, integration, performance, e2e)
+- Framework-specific test creation (pytest, jest, junit5, etc.)
+- Test data generation and mock creation
+- Coverage analysis and test automation setup
+- Test configuration and runner setup
+
+### Ideas Agent
+**Endpoint**: `POST /agents/ideas_agent`
+
+**Capabilities**:
+- Multi-category idea generation (UX, functionality, technical, business)
+- Structured thinking frameworks (Design Thinking, SCAMPER, etc.)
+- Innovation opportunity identification
+- Implementation roadmapping and business value analysis
+- Trend identification and market analysis
+
+### Creativity Agent
+**Endpoint**: `POST /agents/creativity_agent`
+
+**Capabilities**:
+- Creative idea refinement and concept enhancement
+- Aesthetic improvement and emotional resonance
+- Novel angle identification and creative synthesis
+- Design critique and narrative development
+- Innovation amplification and artistic feedback
+
+### Self-Scoring Agent
+**Endpoint**: `POST /agents/self_scoring`
+
+**Capabilities**:
+- Multi-dimensional quality scoring (0-10 scale)
+- Confidence assessment and objective evaluation
+- Detailed improvement suggestions with prioritization
+- Comparative analysis and performance metrics
+- Content-specific evaluation criteria
 
 ## 📊 Analytics and Monitoring
 
