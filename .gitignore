@@ -88,6 +88,7 @@ config/config.json
 *.key
 *.pem
 secrets/
+setup_env.sh  # Contains API keys for testing
 
 # Temporary files
 tmp/
