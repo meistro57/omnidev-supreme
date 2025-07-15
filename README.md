@@ -21,32 +21,35 @@ Consolidate scattered AI development systems into one unified platform that can:
 
 ## 🏗️ Architecture
 
-### Core Components
+<details>
+<summary><strong>Core Components</strong></summary>
 
-#### 1. **Unified Agent Registry**
+### 1. **Unified Agent Registry**
 - **OBELISK Agents**: Multi-model task routing and execution
 - **The-Agency Agents**: Full lifecycle development automation
 - **AI-Dev-Team Agents**: MCP protocol-based team coordination
 - **Village-of-Intelligence**: Self-evolving agent ecosystem
 - **MeistroCraft System**: GPT-4 orchestration with Claude execution
 
-#### 2. **Multi-Model Orchestration**
+### 2. **Multi-Model Orchestration**
 - **OpenAI Models**: GPT-4o, GPT-4, GPT-3.5 Turbo
 - **Anthropic Models**: Claude 3.5 Sonnet, Claude 3 Opus
 - **Local Models**: Ollama (Llama 3.1, CodeLlama, Mistral)
 - **Specialized Models**: Chatterbox TTS, Dia Dialogue, ComfyUI Visual
 
-#### 3. **Universal Memory System**
+### 3. **Universal Memory System**
 - **Vector Memory**: FAISS + Sentence Transformers for semantic search
 - **Relational Memory**: PostgreSQL with structured data
 - **Session Memory**: Redis for active conversations
 - **Knowledge Graph**: Connected relationships and dependencies
 
-#### 4. **Unified Web Interface**
+### 4. **Unified Web Interface**
 - **Monaco Editor**: VS Code-style editing with AI assistance
 - **Agent Dashboard**: Real-time monitoring and control
 - **Project Manager**: Multi-project workspace management
 - **Memory Explorer**: Knowledge graph visualization
+
+</details>
 
 ## 🚀 Features
 
@@ -101,7 +104,9 @@ omnidev-supreme/
 
 ## 🛠️ Technology Stack
 
-### **Backend**
+<details>
+<summary><strong>Backend</strong></summary>
+
 - **Framework**: FastAPI with Python 3.11+
 - **Database**: PostgreSQL (primary), Redis (cache), SQLite (sessions)
 - **Vector Store**: FAISS + Qdrant
@@ -109,26 +114,40 @@ omnidev-supreme/
 - **WebSocket**: FastAPI WebSocket
 - **ORM**: SQLAlchemy
 
-### **Frontend**
+</details>
+
+<details>
+<summary><strong>Frontend</strong></summary>
+
 - **Framework**: React 18 + TypeScript
 - **Editor**: Monaco Editor
 - **State Management**: Redux Toolkit + RTK Query
 - **Styling**: Tailwind CSS + Headless UI
 - **Build Tool**: Vite + ESBuild
 
-### **AI/ML**
+</details>
+
+<details>
+<summary><strong>AI/ML</strong></summary>
+
 - **OpenAI**: GPT-4o, GPT-4, GPT-3.5
 - **Anthropic**: Claude 3.5 Sonnet, Claude 3 Opus
 - **Local Models**: Ollama integration
 - **Orchestration**: LangChain + Custom routing
 - **Embeddings**: OpenAI + Sentence Transformers
 
-### **Infrastructure**
+</details>
+
+<details>
+<summary><strong>Infrastructure</strong></summary>
+
 - **Containerization**: Docker + Docker Compose
 - **Orchestration**: Kubernetes
 - **Monitoring**: Prometheus + Grafana
 - **Logging**: ELK Stack
 - **Security**: HashiCorp Vault + OAuth2
+
+</details>
 
 ## 🚀 Quick Start
 
@@ -167,24 +186,34 @@ npm run dev
 
 ## 📊 Consolidated Systems
 
-OmniDev Supreme consolidates the following systems:
+<details>
+<summary><strong>AI Development Systems</strong></summary>
 
-### **AI Development Systems**
 - **OBELISK**: Multi-agent development OS with vector memory
 - **MeistroCraft**: Web IDE + GPT-4/Claude orchestration
 - **The-Agency**: 6 specialized agents for full lifecycle
 - **AI-Development-Team**: MCP server development team
 - **Artificial-Village-of-Intelligence**: Self-evolving agent ecosystem
 
-### **Audio/Creative Systems**
+</details>
+
+<details>
+<summary><strong>Audio/Creative Systems</strong></summary>
+
 - **Chatterbox**: Production-grade TTS system
 - **Dia**: Text-to-dialogue model
 - **ComfyUI**: Visual AI engine
 - **SoulscribeGPT**: AI writing assistant
 
-### **Supporting Systems**
+</details>
+
+<details>
+<summary><strong>Supporting Systems</strong></summary>
+
 - **MeistroVerse**: Behavioral evolution system
 - **Gateway Trainer**: Audio processing tools
+
+</details>
 
 ## 🎯 Roadmap
 
@@ -238,7 +267,8 @@ OmniDev Supreme consolidates the following systems:
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-### Development Setup
+<details>
+<summary><strong>Development Setup</strong></summary>
 
 ```bash
 # Backend development
@@ -255,6 +285,8 @@ npm run dev
 pytest backend/tests/
 npm test
 ```
+
+</details>
 
 ## 📄 License
 
