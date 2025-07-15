@@ -28,6 +28,12 @@ from .obelisk.test_harness_agent import create_test_harness_agent
 from .obelisk.ideas_agent import create_ideas_agent
 from .obelisk.creativity_agent import create_creativity_agent
 from .obelisk.self_scoring_agent import create_self_scoring_agent
+from .ai_dev_team.project_manager_agent import create_project_manager_agent
+from .ai_dev_team.architect_agent import create_architect_agent
+from .ai_dev_team.developer_agent import create_developer_agent
+from .ai_dev_team.qa_agent import create_qa_agent
+from .ai_dev_team.devops_agent import create_devops_agent
+from .ai_dev_team.review_agent import create_review_agent
 from ..memory.memory_manager import memory_manager, MemoryType, MemoryPriority
 from ..orchestration.model_orchestrator import model_orchestrator
 
@@ -282,18 +288,65 @@ class AgentIntegrationManager:
         logger.info("👥 Integrating AI-Development-Team agents...")
         
         try:
-            # TODO: Integrate AI-Development-Team agents
-            # - ProjectManagerAgent
-            # - ArchitectAgent
-            # - DeveloperAgent
-            # - QAAgent
-            # - DevOpsAgent
-            # - ReviewAgent
+            # Create and register Project Manager Agent
+            project_manager = create_project_manager_agent(self.config)
+            if self.registry.register_agent(project_manager):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Project Manager Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Project Manager Agent integration failed")
             
-            logger.info("⏳ AI-Development-Team integration planned for next phase")
+            # Create and register Architect Agent
+            architect = create_architect_agent(self.config)
+            if self.registry.register_agent(architect):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Architect Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Architect Agent integration failed")
+            
+            # Create and register Developer Agent
+            developer = create_developer_agent(self.config)
+            if self.registry.register_agent(developer):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Developer Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Developer Agent integration failed")
+            
+            # Create and register QA Agent
+            qa_agent = create_qa_agent(self.config)
+            if self.registry.register_agent(qa_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ QA Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ QA Agent integration failed")
+            
+            # Create and register DevOps Agent
+            devops_agent = create_devops_agent(self.config)
+            if self.registry.register_agent(devops_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ DevOps Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ DevOps Agent integration failed")
+            
+            # Create and register Review Agent
+            review_agent = create_review_agent(self.config)
+            if self.registry.register_agent(review_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Review Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Review Agent integration failed")
+            
+            self.integration_stats["systems_integrated"].append("AI-Development-Team")
             
         except Exception as e:
             logger.error(f"❌ AI-Development-Team integration failed: {e}")
+            self.integration_stats["failed_integrations"] += 1
     
     async def _integrate_village_agents(self):
         """Integrate Village-of-Intelligence agents"""
