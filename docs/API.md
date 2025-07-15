@@ -34,9 +34,9 @@ Check system status and availability.
   "timestamp": "2024-01-15T10:30:00Z",
   "version": "1.0.0",
   "agents": {
-    "total": 6,
-    "active": 6,
-    "idle": 6
+    "total": 11,
+    "active": 11,
+    "idle": 11
   },
   "memory": {
     "total_items": 1250,
@@ -372,6 +372,51 @@ For real-time communication and streaming responses.
 - CI/CD pipeline setup
 - Cloud deployment (AWS, Heroku, Vercel)
 - Infrastructure as code
+
+### GPT-4 Orchestrator Agent
+**Endpoint**: `POST /agents/gpt4_orchestrator`
+
+**Capabilities**:
+- Strategic task planning and orchestration
+- Multi-agent coordination and workflow optimization
+- Risk management and contingency planning
+- Resource allocation and optimization
+
+### Claude Executor Agent
+**Endpoint**: `POST /agents/claude_executor`
+
+**Capabilities**:
+- Claude CLI integration and automation
+- Strategic execution with context preservation
+- Session persistence and iterative execution
+- File operations and workspace management
+
+### Session Manager Agent
+**Endpoint**: `POST /agents/session_manager`
+
+**Capabilities**:
+- Session lifecycle management (create, get, update, delete)
+- Workspace isolation and coordination
+- Context persistence across interactions
+- Session analytics and monitoring
+
+### GitHub Integrator Agent
+**Endpoint**: `POST /agents/github_integrator`
+
+**Capabilities**:
+- Repository management (create, fork, list)
+- Pull request automation (create, update, merge)
+- Issue tracking (create, update, close)
+- Branch management and file operations
+
+### Token Tracker Agent
+**Endpoint**: `POST /agents/token_tracker`
+
+**Capabilities**:
+- Token usage tracking across all models
+- Cost analysis and budget management
+- Usage analytics and optimization recommendations
+- Limit enforcement and alerting
 
 ## 📊 Analytics and Monitoring
 

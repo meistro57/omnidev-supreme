@@ -16,6 +16,11 @@ from .agency.tester_agent import create_tester_agent
 from .agency.reviewer_agent import create_reviewer_agent
 from .agency.fixer_agent import create_fixer_agent
 from .agency.deployer_agent import create_deployer_agent
+from .meistrocraft.gpt4_orchestrator_agent import create_gpt4_orchestrator_agent
+from .meistrocraft.claude_executor_agent import create_claude_executor_agent
+from .meistrocraft.session_manager_agent import create_session_manager_agent
+from .meistrocraft.github_integrator_agent import create_github_integrator_agent
+from .meistrocraft.token_tracker_agent import create_token_tracker_agent
 from ..memory.memory_manager import memory_manager, MemoryType, MemoryPriority
 from ..orchestration.model_orchestrator import model_orchestrator
 
@@ -140,17 +145,56 @@ class AgentIntegrationManager:
         logger.info("🎯 Integrating MeistroCraft agents...")
         
         try:
-            # TODO: Integrate MeistroCraft agents
-            # - GPT-4 Orchestrator
-            # - Claude Executor
-            # - Session Manager
-            # - GitHub Integrator
-            # - Token Tracker
+            # Create and register GPT-4 Orchestrator Agent
+            gpt4_orchestrator = create_gpt4_orchestrator_agent(self.config)
+            if self.registry.register_agent(gpt4_orchestrator):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ GPT-4 Orchestrator Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ GPT-4 Orchestrator Agent integration failed")
             
-            logger.info("⏳ MeistroCraft integration planned for next phase")
+            # Create and register Claude Executor Agent
+            claude_executor = create_claude_executor_agent(self.config)
+            if self.registry.register_agent(claude_executor):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Claude Executor Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Claude Executor Agent integration failed")
+            
+            # Create and register Session Manager Agent
+            session_manager = create_session_manager_agent(self.config)
+            if self.registry.register_agent(session_manager):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Session Manager Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Session Manager Agent integration failed")
+            
+            # Create and register GitHub Integrator Agent
+            github_integrator = create_github_integrator_agent(self.config)
+            if self.registry.register_agent(github_integrator):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ GitHub Integrator Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ GitHub Integrator Agent integration failed")
+            
+            # Create and register Token Tracker Agent
+            token_tracker = create_token_tracker_agent(self.config)
+            if self.registry.register_agent(token_tracker):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Token Tracker Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Token Tracker Agent integration failed")
+            
+            self.integration_stats["systems_integrated"].append("MeistroCraft")
             
         except Exception as e:
             logger.error(f"❌ MeistroCraft integration failed: {e}")
+            self.integration_stats["failed_integrations"] += 1
     
     async def _integrate_obelisk_agents(self):
         """Integrate OBELISK agents"""
