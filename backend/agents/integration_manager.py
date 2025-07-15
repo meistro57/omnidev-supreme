@@ -12,7 +12,7 @@ import logging
 from .registry.agent_registry import agent_registry, AgentType
 from .agency.architect_agent import create_architect_agent
 from .agency.coder_agent import create_coder_agent
-from ..memory.memory_manager import memory_manager
+from ..memory.memory_manager import memory_manager, MemoryType, MemoryPriority
 from ..orchestration.model_orchestrator import model_orchestrator
 
 logger = logging.getLogger(__name__)
@@ -182,8 +182,8 @@ class AgentIntegrationManager:
         # Store in memory
         self.memory_manager.store_memory(
             content=f"Agent integration completed: {json.dumps(integration_summary, indent=2)}",
-            memory_type=memory_manager.MemoryType.AGENT,
-            priority=memory_manager.MemoryPriority.HIGH,
+            memory_type=MemoryType.AGENT,
+            priority=MemoryPriority.HIGH,
             metadata={
                 "integration_manager": True,
                 "integration_summary": integration_summary
@@ -275,8 +275,8 @@ class AgentIntegrationManager:
             # Store workflow results
             self.memory_manager.store_memory(
                 content=f"Workflow execution completed: {json.dumps(workflow_results, indent=2)}",
-                memory_type=memory_manager.MemoryType.TASK,
-                priority=memory_manager.MemoryPriority.HIGH,
+                memory_type=MemoryType.TASK,
+                priority=MemoryPriority.HIGH,
                 metadata={
                     "workflow_id": workflow_id,
                     "stages_completed": len(workflow_results["stages"]),
