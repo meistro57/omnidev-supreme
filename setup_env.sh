@@ -5,8 +5,8 @@
 echo "🚀 Setting up OmniDev Supreme environment..."
 
 # TODO: Replace with your actual API keys
-export OPENAI_API_KEY="sk-your-openai-key-here"
-export ANTHROPIC_API_KEY="sk-ant-your-anthropic-key-here"
+export OPENAI_API_KEY="your-openai-api-key-here"
+export ANTHROPIC_API_KEY="your-anthropic-api-key-here"
 
 # Optional: Ollama configuration
 export OLLAMA_HOST="http://localhost:11434"

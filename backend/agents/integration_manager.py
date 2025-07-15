@@ -12,6 +12,10 @@ import logging
 from .registry.agent_registry import agent_registry, AgentType
 from .agency.architect_agent import create_architect_agent
 from .agency.coder_agent import create_coder_agent
+from .agency.tester_agent import create_tester_agent
+from .agency.reviewer_agent import create_reviewer_agent
+from .agency.fixer_agent import create_fixer_agent
+from .agency.deployer_agent import create_deployer_agent
 from ..memory.memory_manager import memory_manager, MemoryType, MemoryPriority
 from ..orchestration.model_orchestrator import model_orchestrator
 
@@ -89,7 +93,41 @@ class AgentIntegrationManager:
                 self.integration_stats["failed_integrations"] += 1
                 logger.error("❌ Coder Agent integration failed")
             
-            # TODO: Add Tester, Reviewer, Fixer, Deployer agents
+            # Create and register Tester Agent
+            tester_agent = create_tester_agent(self.config)
+            if self.registry.register_agent(tester_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Tester Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Tester Agent integration failed")
+            
+            # Create and register Reviewer Agent
+            reviewer_agent = create_reviewer_agent(self.config)
+            if self.registry.register_agent(reviewer_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Reviewer Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Reviewer Agent integration failed")
+            
+            # Create and register Fixer Agent
+            fixer_agent = create_fixer_agent(self.config)
+            if self.registry.register_agent(fixer_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Fixer Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Fixer Agent integration failed")
+            
+            # Create and register Deployer Agent
+            deployer_agent = create_deployer_agent(self.config)
+            if self.registry.register_agent(deployer_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Deployer Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Deployer Agent integration failed")
             
             self.integration_stats["systems_integrated"].append("The-Agency")
             
@@ -270,7 +308,154 @@ class AgentIntegrationManager:
                     workflow_results["error"] = f"Coding stage failed: {code_result.get('error')}"
                     return workflow_results
             
-            # TODO: Add more stages (testing, review, fixing, deployment)
+            # Stage 3: Testing
+            tester_agent = self.registry.get_agent("tester")
+            if tester_agent and workflow_results["success"]:
+                logger.info("🧪 Stage 3: Testing")
+                
+                # Extract generated code from previous stage
+                generated_code = ""
+                if len(workflow_results["stages"]) > 1:
+                    code_result = workflow_results["stages"][1]["result"]
+                    if "code_files" in code_result:
+                        generated_code = code_result["code_files"][0].get("content", "")
+                
+                testing_task = {
+                    "id": f"{workflow_id}_testing",
+                    "content": f"Create comprehensive tests for: {user_request}",
+                    "type": "testing",
+                    "language": "python",
+                    "code_to_test": generated_code,
+                    "session_id": session_id
+                }
+                
+                test_result = await tester_agent.execute(testing_task)
+                workflow_results["stages"].append({
+                    "stage": "testing",
+                    "agent": "tester",
+                    "result": test_result
+                })
+                
+                if not test_result.get("success"):
+                    workflow_results["success"] = False
+                    workflow_results["error"] = f"Testing stage failed: {test_result.get('error')}"
+                    return workflow_results
+            
+            # Stage 4: Code Review
+            reviewer_agent = self.registry.get_agent("reviewer")
+            if reviewer_agent and workflow_results["success"]:
+                logger.info("🔍 Stage 4: Code Review")
+                
+                # Extract generated code from coding stage
+                generated_code = ""
+                if len(workflow_results["stages"]) > 1:
+                    code_result = workflow_results["stages"][1]["result"]
+                    if "code_files" in code_result:
+                        generated_code = code_result["code_files"][0].get("content", "")
+                
+                review_task = {
+                    "id": f"{workflow_id}_review",
+                    "content": f"Review code quality for: {user_request}",
+                    "type": "review",
+                    "language": "python",
+                    "code_to_review": generated_code,
+                    "session_id": session_id
+                }
+                
+                review_result = await reviewer_agent.execute(review_task)
+                workflow_results["stages"].append({
+                    "stage": "review",
+                    "agent": "reviewer",
+                    "result": review_result
+                })
+                
+                if not review_result.get("success"):
+                    workflow_results["success"] = False
+                    workflow_results["error"] = f"Review stage failed: {review_result.get('error')}"
+                    return workflow_results
+            
+            # Stage 5: Fixing (if review found issues)
+            fixer_agent = self.registry.get_agent("fixer")
+            if fixer_agent and workflow_results["success"]:
+                # Check if review found critical issues
+                review_critical = False
+                if len(workflow_results["stages"]) > 3:
+                    review_result = workflow_results["stages"][3]["result"]
+                    if "review_results" in review_result:
+                        review_data = review_result["review_results"]
+                        critical_issues = review_data.get("quality_metrics", {}).get("critical_issues", 0)
+                        if critical_issues > 0:
+                            review_critical = True
+                
+                if review_critical:
+                    logger.info("🔧 Stage 5: Fixing Critical Issues")
+                    
+                    # Extract generated code from coding stage
+                    generated_code = ""
+                    if len(workflow_results["stages"]) > 1:
+                        code_result = workflow_results["stages"][1]["result"]
+                        if "code_files" in code_result:
+                            generated_code = code_result["code_files"][0].get("content", "")
+                    
+                    fixing_task = {
+                        "id": f"{workflow_id}_fixing",
+                        "content": f"Fix critical issues found in code review for: {user_request}",
+                        "type": "fixing",
+                        "language": "python",
+                        "broken_code": generated_code,
+                        "error_message": "Critical issues found in code review",
+                        "session_id": session_id
+                    }
+                    
+                    fix_result = await fixer_agent.execute(fixing_task)
+                    workflow_results["stages"].append({
+                        "stage": "fixing",
+                        "agent": "fixer",
+                        "result": fix_result
+                    })
+                    
+                    if not fix_result.get("success"):
+                        workflow_results["success"] = False
+                        workflow_results["error"] = f"Fixing stage failed: {fix_result.get('error')}"
+                        return workflow_results
+            
+            # Stage 6: Deployment
+            deployer_agent = self.registry.get_agent("deployer")
+            if deployer_agent and workflow_results["success"]:
+                logger.info("🚀 Stage 6: Deployment")
+                
+                # Extract final code (either from coding or fixing stage)
+                final_code = ""
+                if len(workflow_results["stages"]) > 4:  # Has fixing stage
+                    fix_result = workflow_results["stages"][4]["result"]
+                    if "fix_results" in fix_result:
+                        final_code = fix_result["fix_results"].get("fixed_code", "")
+                elif len(workflow_results["stages"]) > 1:  # Use coding stage
+                    code_result = workflow_results["stages"][1]["result"]
+                    if "code_files" in code_result:
+                        final_code = code_result["code_files"][0].get("content", "")
+                
+                deployment_task = {
+                    "id": f"{workflow_id}_deployment",
+                    "content": f"Create deployment configuration for: {user_request}",
+                    "type": "deployment",
+                    "platform": "docker",  # Default platform
+                    "environment": "development",
+                    "project_code": final_code,
+                    "session_id": session_id
+                }
+                
+                deployment_result = await deployer_agent.execute(deployment_task)
+                workflow_results["stages"].append({
+                    "stage": "deployment",
+                    "agent": "deployer",
+                    "result": deployment_result
+                })
+                
+                if not deployment_result.get("success"):
+                    workflow_results["success"] = False
+                    workflow_results["error"] = f"Deployment stage failed: {deployment_result.get('error')}"
+                    return workflow_results
             
             # Store workflow results
             self.memory_manager.store_memory(
