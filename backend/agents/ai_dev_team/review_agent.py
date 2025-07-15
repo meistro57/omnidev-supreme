@@ -11,8 +11,8 @@ from datetime import datetime
 import logging
 
 from ..registry.agent_registry import BaseAgent, AgentMetadata, AgentType, AgentStatus
-from ..memory.memory_manager import memory_manager, MemoryType, MemoryPriority
-from ..orchestration.model_orchestrator import model_orchestrator, TaskRequest, TaskComplexity, ModelCapability
+from ...memory.memory_manager import memory_manager, MemoryType, MemoryPriority
+from ...orchestration.model_orchestrator import model_orchestrator, TaskRequest, TaskComplexity, ModelCapability
 
 logger = logging.getLogger(__name__)
 

@@ -25,6 +25,7 @@ class AgentType(Enum):
     CREATIVE = "creative"
     GUARDIAN = "guardian"
     ANALYZER = "analyzer"
+    TRAINER = "trainer"
 
 
 class AgentStatus(Enum):

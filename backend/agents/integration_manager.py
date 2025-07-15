@@ -34,6 +34,11 @@ from .ai_dev_team.developer_agent import create_developer_agent
 from .ai_dev_team.qa_agent import create_qa_agent
 from .ai_dev_team.devops_agent import create_devops_agent
 from .ai_dev_team.review_agent import create_review_agent
+from .village.thinker_agent import create_thinker_agent
+from .village.builder_agent import create_builder_agent
+from .village.artist_agent import create_artist_agent
+from .village.guardian_agent import create_guardian_agent
+from .village.trainer_agent import create_trainer_agent
 from ..memory.memory_manager import memory_manager, MemoryType, MemoryPriority
 from ..orchestration.model_orchestrator import model_orchestrator
 
@@ -353,17 +358,56 @@ class AgentIntegrationManager:
         logger.info("🏘️  Integrating Village-of-Intelligence agents...")
         
         try:
-            # TODO: Integrate Village-of-Intelligence agents
-            # - ThinkerAgent
-            # - BuilderAgent
-            # - ArtistAgent
-            # - GuardianAgent
-            # - TrainerAgent
+            # Create and register Thinker Agent
+            thinker_agent = create_thinker_agent(self.config)
+            if self.registry.register_agent(thinker_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Thinker Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Thinker Agent integration failed")
             
-            logger.info("⏳ Village-of-Intelligence integration planned for next phase")
+            # Create and register Builder Agent
+            builder_agent = create_builder_agent(self.config)
+            if self.registry.register_agent(builder_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Builder Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Builder Agent integration failed")
+            
+            # Create and register Artist Agent
+            artist_agent = create_artist_agent(self.config)
+            if self.registry.register_agent(artist_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Artist Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Artist Agent integration failed")
+            
+            # Create and register Guardian Agent
+            guardian_agent = create_guardian_agent(self.config)
+            if self.registry.register_agent(guardian_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Guardian Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Guardian Agent integration failed")
+            
+            # Create and register Trainer Agent
+            trainer_agent = create_trainer_agent(self.config)
+            if self.registry.register_agent(trainer_agent):
+                self.integration_stats["successful_integrations"] += 1
+                logger.info("✅ Trainer Agent integrated")
+            else:
+                self.integration_stats["failed_integrations"] += 1
+                logger.error("❌ Trainer Agent integration failed")
+            
+            self.integration_stats["systems_integrated"].append("Village-of-Intelligence")
             
         except Exception as e:
             logger.error(f"❌ Village-of-Intelligence integration failed: {e}")
+            self.integration_stats["failed_integrations"] += 1
     
     async def _log_integration_results(self):
         """Log integration results to memory"""

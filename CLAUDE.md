@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-OmniDev Supreme is a unified AI development orchestrator that consolidates multiple AI agent systems into one platform. It's designed as "The One Platform to Rule Them All" and integrates 18+ specialized AI agents from different systems:
+OmniDev Supreme is a unified AI development orchestrator that consolidates multiple AI agent systems into one platform. It's designed as "The One Platform to Rule Them All" and integrates 29 specialized AI agents from different systems:
 
 - **The-Agency** (6 agents): Core development pipeline (architect, coder, tester, reviewer, fixer, deployer)
 - **MeistroCraft** (5 agents): Strategic orchestration (GPT-4 orchestrator, Claude executor, session manager, GitHub integrator, token tracker)
 - **OBELISK** (7 agents): Specialized development intelligence (code architect, code generator, quality checker, test harness, ideas, creativity, self-scoring)
-- **AI-Development-Team** (planned): MCP protocol-based team coordination
-- **Village-of-Intelligence** (planned): Self-evolving agent ecosystem
+- **AI-Development-Team** (6 agents): MCP protocol-based team coordination (project manager, architect, developer, qa, devops, review)
+- **Village-of-Intelligence** (5 agents): Self-evolving agent ecosystem (thinker, builder, artist, guardian, trainer)
 
 ## Development Commands
 
@@ -106,8 +106,8 @@ Key requirements for new agents:
 - **agency/**: The-Agency agents for core development lifecycle
 - **meistrocraft/**: MeistroCraft agents for strategic orchestration
 - **obelisk/**: OBELISK agents for specialized development intelligence
-- **ai_dev_team/**: Placeholder for AI-Development-Team integration
-- **village/**: Placeholder for Village-of-Intelligence integration
+- **ai_dev_team/**: AI-Development-Team agents for team coordination
+- **village/**: Village-of-Intelligence agents for self-evolving ecosystem
 
 ### Agent Integration Pattern
 
@@ -187,13 +187,13 @@ except Exception as e:
 ## Current Development Status
 
 - **Phase 1**: Foundation architecture ✅
-- **Phase 2**: Core integration (18/29 agents) 🚧
+- **Phase 2**: Core integration (29/29 agents) ✅
   - The-Agency: 6/6 agents ✅
   - MeistroCraft: 5/5 agents ✅
   - OBELISK: 7/7 agents ✅
-  - AI-Development-Team: 0/6 agents ⏳
-  - Village-of-Intelligence: 0/5 agents ⏳
-- **Phase 3**: Advanced features (knowledge graph, web interface) ⏳
+  - AI-Development-Team: 6/6 agents ✅
+  - Village-of-Intelligence: 5/5 agents ✅
+- **Phase 3**: Advanced features (knowledge graph, web interface) 🚧
 - **Phase 4**: Production deployment ⏳
 
 ## Key Integration Points
@@ -206,4 +206,16 @@ When working with this codebase:
 4. **Workflow Design**: Consider multi-agent coordination and error handling
 5. **Testing**: Verify agent integration through integration manager tests
 
-The system is designed to be extensible - new agent systems can be added by following the established patterns in the existing agency/, meistrocraft/, and obelisk/ directories.
+The system is designed to be extensible - new agent systems can be added by following the established patterns in the existing agency/, meistrocraft/, obelisk/, ai_dev_team/, and village/ directories.
+
+## Village-of-Intelligence Agents
+
+The Village-of-Intelligence system brings collective intelligence and self-evolution to the platform:
+
+- **ThinkerAgent**: Strategic thinking, decision-making, and planning
+- **BuilderAgent**: Construction, implementation, and systematic building
+- **ArtistAgent**: Creative design, aesthetics, and user experience
+- **GuardianAgent**: Security, protection, and compliance
+- **TrainerAgent**: Training, learning, and knowledge development
+
+These agents work together in a collective intelligence framework, sharing knowledge and insights through the unified memory system.
