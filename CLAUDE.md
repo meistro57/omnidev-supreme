@@ -35,6 +35,11 @@ python -m backend.main
 
 # Alternative with uvicorn directly
 uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
+
+# Start the frontend (in new terminal)
+cd frontend
+npm install
+npm run dev
 ```
 
 ### Testing Agent Integration
@@ -66,6 +71,13 @@ asyncio.run(test_integration())
 - **API Documentation**: http://localhost:8000/docs
 - **Health Check**: http://localhost:8000/health
 - **Agent Status**: http://localhost:8000/agents
+
+### Frontend Interface
+- **Web Interface**: http://localhost:3000
+- **Monaco Editor**: VS Code-style editor with syntax highlighting
+- **Agent Dashboard**: Real-time monitoring and control
+- **Project Workspace**: Multi-project management
+- **Memory Explorer**: Knowledge graph visualization
 
 ## Architecture Overview
 
@@ -108,6 +120,14 @@ Key requirements for new agents:
 - **obelisk/**: OBELISK agents for specialized development intelligence
 - **ai_dev_team/**: AI-Development-Team agents for team coordination
 - **village/**: Village-of-Intelligence agents for self-evolving ecosystem
+
+#### 6. Frontend System (`frontend/`):
+- **React 18 + TypeScript**: Modern component-based architecture
+- **Monaco Editor**: VS Code-style code editor with syntax highlighting
+- **Redux Toolkit**: State management with slices for agents, tasks, projects, memory
+- **WebSocket Integration**: Real-time updates via Socket.io
+- **Tailwind CSS**: Responsive design with dark theme
+- **Vite**: Fast build tool and development server
 
 ### Agent Integration Pattern
 
@@ -193,7 +213,7 @@ except Exception as e:
   - OBELISK: 7/7 agents ✅
   - AI-Development-Team: 6/6 agents ✅
   - Village-of-Intelligence: 5/5 agents ✅
-- **Phase 3**: Advanced features (knowledge graph, web interface) 🚧
+- **Phase 3**: Advanced features (unified web interface ✅, knowledge graph 🚧)
 - **Phase 4**: Production deployment ⏳
 
 ## Key Integration Points
