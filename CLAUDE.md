@@ -4,13 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-OmniDev Supreme is a unified AI development orchestrator that consolidates multiple AI agent systems into one platform. It's designed as "The One Platform to Rule Them All" and integrates 29 specialized AI agents from different systems:
+OmniDev Supreme is a unified AI development orchestrator that consolidates 29 specialized AI agents from 5 different systems into one platform. It combines agent-based architecture, multi-model orchestration (OpenAI, Anthropic, Ollama), and advanced memory systems to provide a unified development experience.
 
+**The 5 Agent Systems:**
 - **The-Agency** (6 agents): Core development pipeline (architect, coder, tester, reviewer, fixer, deployer)
-- **MeistroCraft** (5 agents): Strategic orchestration (GPT-4 orchestrator, Claude executor, session manager, GitHub integrator, token tracker)
-- **OBELISK** (7 agents): Specialized development intelligence (code architect, code generator, quality checker, test harness, ideas, creativity, self-scoring)
-- **AI-Development-Team** (6 agents): MCP protocol-based team coordination (project manager, architect, developer, qa, devops, review)
-- **Village-of-Intelligence** (5 agents): Self-evolving agent ecosystem (thinker, builder, artist, guardian, trainer)
+- **MeistroCraft** (5 agents): Strategic orchestration with GPT-4/Claude integration
+- **OBELISK** (7 agents): Specialized development intelligence with creative and quality features
+- **AI-Development-Team** (6 agents): MCP protocol-based team coordination
+- **Village-of-Intelligence** (5 agents): Self-evolving collective intelligence ecosystem
 
 ## Development Commands
 
@@ -18,9 +19,6 @@ OmniDev Supreme is a unified AI development orchestrator that consolidates multi
 ```bash
 # Quick setup for testing (sets placeholder API keys)
 source ./setup_env.sh
-
-# Full setup with dependencies
-./start.sh
 
 # Manual setup
 python3 -m venv venv
@@ -33,38 +31,40 @@ pip install -r requirements.txt
 # Start the FastAPI server
 python -m backend.main
 
-# Alternative with uvicorn directly
-uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
-
 # Start the frontend (in new terminal)
 cd frontend
 npm install
 npm run dev
 ```
 
-### Testing Agent Integration
+### Testing
 ```bash
-# Test agent integration in Python
-python -c "
-import sys
-sys.path.append('backend')
-from backend.agents.integration_manager import create_integration_manager
-import asyncio
+# Backend tests (when available)
+pytest backend/tests/
 
-config = {
-    'openai': {'api_key': 'test'},
-    'anthropic': {'api_key': 'test'},
-    'obelisk': {}
-}
+# Frontend tests
+cd frontend
+npm test
 
-async def test_integration():
-    manager = create_integration_manager(config)
-    await manager.initialize_all_agents()
-    stats = manager.get_integration_stats()
-    print(f'Integration Stats: {stats}')
+# Frontend linting
+cd frontend
+npm run lint
 
-asyncio.run(test_integration())
-"
+# Frontend build
+cd frontend
+npm run build
+```
+
+### Development Tools
+```bash
+# Format Python code
+black backend/
+
+# Python type checking
+mypy backend/
+
+# Python linting
+flake8 backend/
 ```
 
 ### API Endpoints
@@ -76,8 +76,6 @@ asyncio.run(test_integration())
 - **Web Interface**: http://localhost:3000
 - **Monaco Editor**: VS Code-style editor with syntax highlighting
 - **Agent Dashboard**: Real-time monitoring and control
-- **Project Workspace**: Multi-project management
-- **Memory Explorer**: Knowledge graph visualization
 
 ## Architecture Overview
 
@@ -129,20 +127,37 @@ Key requirements for new agents:
 - **Tailwind CSS**: Responsive design with dark theme
 - **Vite**: Fast build tool and development server
 
+### Three-Layer Architecture
+
+**Layer 1: Agent Systems** (`backend/agents/`)
+- Each system has its own directory with agent implementations
+- All agents inherit from `BaseAgent` and implement `execute()` and `validate_task()` methods
+- Agents are registered through factory functions like `create_<agent_name>_agent(config)`
+
+**Layer 2: Integration & Orchestration** (`backend/`)
+- **AgentIntegrationManager**: Coordinates all 29 agents across systems
+- **ModelOrchestrator**: Routes tasks to appropriate AI models (OpenAI, Anthropic, Ollama)
+- **UnifiedMemoryManager**: Handles vector, relational, and session memory
+
+**Layer 3: API & Frontend** (`backend/main.py`, `frontend/`)
+- FastAPI backend with REST endpoints and WebSocket support
+- React + TypeScript frontend with Monaco Editor integration
+- Real-time agent monitoring and project management
+
 ### Agent Integration Pattern
 
 Each agent system follows this pattern:
-1. **Agent Implementation**: Inherits from BaseAgent with required methods
-2. **Factory Function**: `create_<agent_name>_agent(config)` for instantiation
-3. **Integration**: Registered via AgentIntegrationManager
-4. **Validation**: Task validation based on content keywords
-5. **Execution**: Async execution with memory storage and orchestration
+1. Agent inherits from `BaseAgent` with required methods
+2. Factory function creates agent instances
+3. Registration in `AgentIntegrationManager`
+4. Task validation based on content keywords
+5. Async execution with memory storage
 
 ### Memory Integration Pattern
 
 All agents store results using:
 ```python
-self.memory_manager.store_memory(
+await self.memory_manager.store_memory(
     content=result_description,
     memory_type=MemoryType.TASK,
     priority=MemoryPriority.HIGH,
@@ -160,63 +175,54 @@ Required environment variables:
 - `OLLAMA_HOST`: Ollama local model endpoint (optional)
 - `OLLAMA_ENABLED`: Enable Ollama integration (optional)
 
-Configuration structure:
-```python
-config = {
-    'openai': {'api_key': 'sk-...'},
-    'anthropic': {'api_key': 'sk-ant-...'},
-    'obelisk': {},
-    'the_agency': {},
-    'meistrocraft': {}
-}
-```
-
 ## Development Guidelines
 
 ### Adding New Agents
 
-1. **Create Agent Class**: Inherit from BaseAgent in appropriate system directory
-2. **Implement Required Methods**: `execute()` and `validate_task()`
-3. **Create Factory Function**: `create_<agent_name>_agent(config)`
-4. **Register in Integration Manager**: Add to `_integrate_<system>_agents()`
-5. **Update Documentation**: Add to AGENTS.md and API.md
+1. Create agent class inheriting from `BaseAgent` in appropriate system directory
+2. Implement `execute()` and `validate_task()` methods
+3. Create factory function `create_<agent_name>_agent(config)`
+4. Register in `AgentIntegrationManager._integrate_<system>_agents()`
+5. Update agent type enum in `backend/agents/registry/agent_registry.py`
+
+### Agent Implementation Template
+
+```python
+class NewAgent(BaseAgent):
+    def __init__(self, config: Dict[str, Any]):
+        metadata = AgentMetadata(
+            name="new_agent",
+            agent_type=AgentType.YOUR_TYPE,
+            capabilities=["capability1", "capability2"],
+            description="Agent description"
+        )
+        super().__init__(metadata, config)
+    
+    async def execute(self, task: Dict[str, Any]) -> Dict[str, Any]:
+        try:
+            self.status = AgentStatus.BUSY
+            # Implementation here
+            self.status = AgentStatus.IDLE
+            return {"success": True, "result": result}
+        except Exception as e:
+            self.status = AgentStatus.ERROR
+            return {"success": False, "error": str(e)}
+    
+    def validate_task(self, task: Dict[str, Any]) -> bool:
+        content = task.get("content", "").lower()
+        keywords = ["keyword1", "keyword2"]
+        return any(keyword in content for keyword in keywords)
+```
 
 ### Working with Multi-Agent Workflows
 
-The system supports complex multi-agent workflows through:
+The system supports complex workflows through:
 - **Sequential Execution**: Tasks flow through agent pipeline
-- **Parallel Processing**: Multiple agents can work concurrently
+- **Parallel Processing**: Multiple agents working concurrently
 - **Conditional Routing**: Based on task validation and agent capabilities
 - **Memory Sharing**: Cross-agent context via unified memory system
 
-### Error Handling Pattern
-
-All agents should follow this error handling pattern:
-```python
-try:
-    self.status = AgentStatus.BUSY
-    # ... processing ...
-    self.status = AgentStatus.IDLE
-    return {"success": True, "result": result}
-except Exception as e:
-    self.status = AgentStatus.ERROR
-    logger.error(f"Agent {self.metadata.name} failed: {e}")
-    return {"success": False, "error": str(e)}
-```
-
-## Current Development Status
-
-- **Phase 1**: Foundation architecture ✅
-- **Phase 2**: Core integration (29/29 agents) ✅
-  - The-Agency: 6/6 agents ✅
-  - MeistroCraft: 5/5 agents ✅
-  - OBELISK: 7/7 agents ✅
-  - AI-Development-Team: 6/6 agents ✅
-  - Village-of-Intelligence: 5/5 agents ✅
-- **Phase 3**: Advanced features (unified web interface ✅, knowledge graph 🚧)
-- **Phase 4**: Production deployment ⏳
-
-## Key Integration Points
+### Key Integration Points
 
 When working with this codebase:
 
@@ -224,18 +230,6 @@ When working with this codebase:
 2. **Memory Management**: Use the unified memory system for persistence
 3. **Model Selection**: Leverage model orchestrator for optimal AI model routing
 4. **Workflow Design**: Consider multi-agent coordination and error handling
-5. **Testing**: Verify agent integration through integration manager tests
+5. **Testing**: Verify agent integration through integration manager
 
-The system is designed to be extensible - new agent systems can be added by following the established patterns in the existing agency/, meistrocraft/, obelisk/, ai_dev_team/, and village/ directories.
-
-## Village-of-Intelligence Agents
-
-The Village-of-Intelligence system brings collective intelligence and self-evolution to the platform:
-
-- **ThinkerAgent**: Strategic thinking, decision-making, and planning
-- **BuilderAgent**: Construction, implementation, and systematic building
-- **ArtistAgent**: Creative design, aesthetics, and user experience
-- **GuardianAgent**: Security, protection, and compliance
-- **TrainerAgent**: Training, learning, and knowledge development
-
-These agents work together in a collective intelligence framework, sharing knowledge and insights through the unified memory system.
+The system is designed to be extensible - new agent systems can be added by following the established patterns in the existing directories.
