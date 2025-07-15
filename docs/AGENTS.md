@@ -1,5 +1,9 @@
 # OmniDev Supreme Agent Documentation
 
+<div align="center">
+  <img src="../OmniDevSupreme_logo.png" alt="OmniDev Supreme Logo" width="200" height="200"/>
+</div>
+
 ## 🤖 Agent Registry System
 
 OmniDev Supreme uses a unified agent registry to manage all AI agents from different systems. Each agent implements the `BaseAgent` interface and is registered with specific capabilities, priorities, and metadata.

@@ -1,5 +1,9 @@
 # OmniDev Supreme 👑
 
+<div align="center">
+  <img src="OmniDevSupreme_logo.png" alt="OmniDev Supreme Logo" width="400" height="400"/>
+</div>
+
 **The One Platform to Rule Them All**
 
 OmniDev Supreme is the unified AI development orchestrator that consolidates 10+ AI development systems into one ultimate platform. It combines agent-based architecture, multi-model orchestration, and advanced memory systems to provide an unparalleled development experience.

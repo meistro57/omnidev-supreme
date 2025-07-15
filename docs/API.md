@@ -1,5 +1,9 @@
 # OmniDev Supreme API Documentation
 
+<div align="center">
+  <img src="../OmniDevSupreme_logo.png" alt="OmniDev Supreme Logo" width="200" height="200"/>
+</div>
+
 ## 🌐 API Overview
 
 OmniDev Supreme provides a comprehensive REST API for interacting with the unified agent system. The API supports real-time communication through WebSocket connections and provides extensive capabilities for development automation.
