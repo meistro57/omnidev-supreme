@@ -17,6 +17,7 @@ from pydantic import BaseModel
 from .agents.integration_manager import initialize_unified_agents
 from .orchestration.model_orchestrator import create_orchestrator
 from .memory.memory_manager import memory_manager
+from .knowledge_graph.api_endpoints import router as knowledge_graph_router
 import logging
 
 # Configure logging
@@ -88,6 +89,9 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan
 )
+
+# Include knowledge graph router
+app.include_router(knowledge_graph_router)
 
 # Add CORS middleware
 app.add_middleware(

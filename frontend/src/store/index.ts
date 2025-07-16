@@ -6,6 +6,7 @@ import memoryReducer from './slices/memorySlice';
 import editorReducer from './slices/editorSlice';
 import uiReducer from './slices/uiSlice';
 import websocketReducer from './slices/websocketSlice';
+import knowledgeGraphReducer from './slices/knowledgeGraphSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     editor: editorReducer,
     ui: uiReducer,
     websocket: websocketReducer,
+    knowledgeGraph: knowledgeGraphReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

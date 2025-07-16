@@ -13,7 +13,8 @@ import {
   CogIcon,
   HomeIcon,
   WifiIcon,
-  ExclamationTriangleIcon
+  ExclamationTriangleIcon,
+  ShareIcon
 } from '@heroicons/react/24/outline';
 import { formatRelativeTime } from '@/utils/formatters';
 
@@ -34,6 +35,7 @@ const Header: React.FC = () => {
     { path: '/projects', icon: CubeIcon, label: 'Projects' },
     { path: '/memory', icon: DocumentTextIcon, label: 'Memory' },
     { path: '/tasks', icon: ClipboardDocumentListIcon, label: 'Tasks' },
+    { path: '/knowledge-graph', icon: ShareIcon, label: 'Knowledge Graph' },
   ];
 
   const activeAgents = agents.filter(agent => agent.status === 'busy').length;

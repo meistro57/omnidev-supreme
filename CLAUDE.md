@@ -221,6 +221,51 @@ The system supports complex workflows through:
 - **Parallel Processing**: Multiple agents working concurrently
 - **Conditional Routing**: Based on task validation and agent capabilities
 - **Memory Sharing**: Cross-agent context via unified memory system
+- **Knowledge Graph Coordination**: Intelligent agent selection using graph algorithms
+
+### Knowledge Graph System (NEW)
+
+The platform now includes a comprehensive Knowledge Graph System for intelligent agent coordination:
+
+#### Core Components (`backend/knowledge_graph/`):
+- **KnowledgeGraph**: Main graph engine with SQLite persistence
+- **AgentAnalyzer**: Analyzes existing agents and builds relationships
+- **GraphBasedAgentSelector**: 5 selection strategies for optimal agent routing
+- **API Endpoints**: 15+ REST endpoints for graph operations
+
+#### Frontend Components (`frontend/src/components/KnowledgeGraph/`):
+- **KnowledgeGraphVisualization**: Interactive 2D/3D graph visualization
+- **KnowledgeGraphFilters**: Advanced filtering and search capabilities
+- **Redux Integration**: Complete state management with real-time updates
+
+#### Agent Selection Strategies:
+1. **Greedy**: Best single agent for simple tasks
+2. **Optimal Sequence**: Dependency-aware agent ordering
+3. **Collaborative**: Multi-agent coordination
+4. **Load Balanced**: Considers agent workload
+5. **Adaptive**: Context-aware strategy selection
+
+#### Knowledge Graph Usage:
+```python
+# Get agent recommendations
+recommendations = await agent_selector.select_agents(
+    task={"content": "implement user authentication", "type": "coding"},
+    strategy=SelectionStrategy.OPTIMAL_SEQUENCE,
+    max_agents=3
+)
+
+# Find agent collaborators
+collaborators = knowledge_graph.find_agent_collaborators(agent_id)
+
+# Get optimal agent sequence for capabilities
+sequence = knowledge_graph.get_optimal_agent_sequence(["coding", "testing"])
+```
+
+#### Frontend Access:
+- Navigate to `/knowledge-graph` for interactive visualization
+- Real-time agent relationship mapping
+- Advanced filtering by system, type, and capabilities
+- Export capabilities for analysis
 
 ### Key Integration Points
 
@@ -230,6 +275,17 @@ When working with this codebase:
 2. **Memory Management**: Use the unified memory system for persistence
 3. **Model Selection**: Leverage model orchestrator for optimal AI model routing
 4. **Workflow Design**: Consider multi-agent coordination and error handling
-5. **Testing**: Verify agent integration through integration manager
+5. **Knowledge Graph**: Use graph-based agent selection for optimal coordination
+6. **Testing**: Verify agent integration through integration manager
+
+### Latest Additions (January 2025)
+
+**Knowledge Graph System** - Complete implementation featuring:
+- Interactive 2D/3D visualization with force-directed layouts
+- 5 intelligent agent selection strategies
+- Real-time relationship mapping across all 29 agents
+- Advanced filtering and analytics capabilities
+- Full API integration with 15+ endpoints
+- SQLite persistence with in-memory optimization
 
 The system is designed to be extensible - new agent systems can be added by following the established patterns in the existing directories.

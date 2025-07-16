@@ -15,6 +15,7 @@ import Projects from './pages/Projects';
 import Memory from './pages/Memory';
 import Tasks from './pages/Tasks';
 import Settings from './pages/Settings';
+import KnowledgeGraph from './pages/KnowledgeGraph';
 
 // Providers
 import { NotificationProvider } from './components/Notifications/NotificationProvider';
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/memory" element={<Memory />} />
                 <Route path="/tasks" element={<Tasks />} />
+                <Route path="/knowledge-graph" element={<KnowledgeGraph />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </Layout>
